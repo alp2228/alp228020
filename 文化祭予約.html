@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文化祭2年C組企画</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: 'Verdana', sans-serif;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #006400;
+        }
+
+        .container {
+            width: 60%;
+            margin: 100px auto;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.8em;
+            margin-bottom: 30px;
+        }
+
+        .race-title {
+            font-size: 1.8em;
+            margin-bottom: 50px;
+        }
+
+        .button-container {
+            margin-top: 50px;
+        }
+
+        .button {
+            background-color: #006400;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: #228b22;
+        }
+
+        .reservation-form {
+            display: none; /* 初期は非表示 */
+            background-color: white;
+            width: 60%;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            font-size: 1.2em;
+            color: #006400;
+            display: block;
+            margin: 10px 0;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            border: 2px solid #006400;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #006400;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #228b22;
+        }
+
+        .prediction-section {
+            margin-top: 20px;
+        }
+
+        .prediction-section h2 {
+            color: #006400;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+    </style>
+    <script>
+        function showReservationForm() {
+            document.querySelector('.container').style.display = 'none'; // 最初のUIを非表示
+            document.querySelector('.reservation-form').style.display = 'block'; // 予約画面を表示
+        }
+
+        function submitReservation() {
+            const nickname = document.getElementById("nickname").value;
+            const reservationTime = document.getElementById("reservation-time").value;
+
+            // 各レースの予想結果
+            const race1Prediction = document.getElementById("race1").value;
+            const race2Prediction = document.getElementById("race2").value;
+            const race3Prediction = document.getElementById("race3").value;
+            const race4Prediction = document.getElementById("race4").value;
+
+            if (!nickname || !reservationTime || !race1Prediction || !race2Prediction || !race3Prediction || !race4Prediction) {
+                alert("全てのフィールドを入力してください");
+                return;
+            }
+
+            const reservationData = {
+                nickname: nickname,
+                reservationTime: reservationTime,
+                predictions: {
+                    race1: race1Prediction,
+                    race2: race2Prediction,
+                    race3: race3Prediction,
+                    race4: race4Prediction
+                }
+            };
+
+            const table = localStorage.getItem('reservations') ? JSON.parse(localStorage.getItem('reservations')) : [];
+            table.push(reservationData);
+            localStorage.setItem('reservations', JSON.stringify(table));
+
+            alert(nickname + "さん、指定した時刻 (" + reservationTime + ") までに来てね！");
+            document.getElementById("reservation-form").reset();
+        }
+    </script>
+</head>
+<body>
+
+    <!-- 最初のUI -->
+    <div class="container">
+        <h1 class="title">文化祭2年C組企画</h1>
+        <h2 class="subtitle">時間指定予約</h2>
+        <h2 class="race-title">おもしろ競馬</h2>
+
+        <div class="button-container">
+            <button class="button" onclick="showReservationForm()">予約に進む</button>
+        </div>
+    </div>
+
+    <!-- 予約画面 -->
+    <div class="reservation-form">
+        <h1>予約システム</h1>
+        <form id="reservation-form" onsubmit="event.preventDefault(); submitReservation();">
+            <label for="nickname">ニックネーム：</label>
+            <input type="text" id="nickname" required>
+
+            <label for="reservation-time">予約時間を選択：</label>
+            <select id="reservation-time">
+                <option value="09:00">09:00</option>
+                <option value="09:15">09:15</option>
+                <option value="09:30">09:30</option>
+                <option value="09:45">09:45</option>
+                <option value="10:00">10:00</option>
+                <option value="10:15">10:15</option>
+                <option value="10:30">10:30</option>
+                <option value="10:45">10:45</option>
+                <option value="11:00">11:00</option>
+                <option value="11:15">11:15</option>
+                <option value="11:30">11:30</option>
+                <option value="11:45">11:45</option>
+                <option value="12:00">12:00</option>
+                <option value="12:15">12:15</option>
+                <option value="12:30">12:30</option>
+                <option value="12:45">12:45</option>
+                <option value="13:00">13:00</option>
+                <option value="13:15">13:15</option>
+                <option value="13:30">13:30</option>
+                <option value="13:45">13:45</option>
+                <option value="14:00">14:00</option>
+                <option value="14:15">14:15</option>
+                <option value="14:30">14:30</option>
+                <option value="14:45">14:45</option>
+                <option value="15:00">15:00</option>
+                <option value="15:15">15:15</option>
+                <option value="15:30">15:30</option>
+                <option value="15:45">15:45</option>
+                <option value="16:00">16:00</option>
+            </select>
+
+            <!-- 競馬予想セクション -->
+            <div class="prediction-section">
+                <h2>どの馬が勝つか予想してみよう！</h2>
+                <label for="race1">第1レースの勝ち馬予想：</label>
+                <input type="text" id="race1" required>
+
+                <label for="race2">第2レースの勝ち馬予想：</label>
+                <input type="text" id="race2" required>
+
+                <label for="race3">第3レースの勝ち馬予想：</label>
+                <input type="text" id="race3" required>
+
+                <label for="race4">第4レースの勝ち馬予想：</label>
+                <input type="text" id="race4" required>
+            </div>
+
+            <input type="submit" value="予約送信">
+        </form>
+    </div>
+
+</body>
+</html>
